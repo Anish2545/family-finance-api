@@ -1,16 +1,8 @@
 const mongoose = require('mongoose');
-const uri ="mongodb+srv://sopariwalaanish:yz30fdvMbxZcRXt5@familyfinance.qbwamem.mongodb.net/?retryWrites=true&w=majority&appName=FamilyFinance";
-
-
-async function connectToMongoDB() {
+async function connectToMongoDB(url) {
     try {
-        await mongoose.connect(uri, {
-            //useNewUrlParser: true,
-            //useUnifiedTopology: true,
-            //useCreateIndex: true, // Recommended for unique indexes
-            //useFindAndModify: false, // Disable deprecated methods
+        await mongoose.connect(url, {
         });
-
         console.log('Connected to MongoDB using Mongoose!');
     } catch (error) {
         console.error('Error connecting to MongoDB:', error);

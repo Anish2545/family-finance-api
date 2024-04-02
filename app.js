@@ -1,20 +1,13 @@
 const express = require( 'express' );
 const app=express();
 const {connectToMongoDB}=require('./database/connect')
+require('dotenv').config()
 const port =5000;
 
 async function startApp() {
     try {
-        await connectToMongoDB();
-        console.log("Connected to MongoDB");
-        // Now you can define your Mongoose models and perform CRUD operations
-        // Example: const User = mongoose.model('User', userSchema);
-        // ...
-
-        // Your application logic goes here
-
-        // Don't forget to close the connection when done (if needed)
-        // mongoose.connection.close();
+        await connectToMongoDB(process.env.MONGO_URI);
+        app.listen(3000,console.log("Server Running"));
     } catch (error) {
         console.error('Error starting the app:', error);
     }
