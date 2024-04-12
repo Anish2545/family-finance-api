@@ -8,6 +8,9 @@ const budgetAllocationSchema = new Schema({
     year: { type : Number , unique : false} ,
     amount: { type : Number , required: true },
     givenByUserId:{type:String,required:true}
+},
+{
+    collection: "BudgetAllocation",
 });
 
 module.exports = mongoose.model('BudgetAllocation', budgetAllocationSchema);

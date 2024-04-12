@@ -7,6 +7,9 @@ const budgetAlertSchema = new Schema({
     yearear: { type : Number , unique : false} ,
     amount: { type : Number , required: true },
     userId:{type:String,required:true}
+},
+{
+    collection: "BudgetAlerts",
 });
 
 module.exports = mongoose.model('BudgetAlerts', budgetAlertSchema);

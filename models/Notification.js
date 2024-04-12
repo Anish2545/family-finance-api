@@ -8,6 +8,9 @@ const notificationSchema = new Schema({
         url: { type: String }, // URL of the image
         altText: { type: String }, // Alt text for accessibility
     },
+},
+{
+    collection: "Notification",
 });
 
 module.exports = mongoose.model('Notification', notificationSchema);

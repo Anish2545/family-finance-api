@@ -9,6 +9,9 @@ const transactionSchema = new Schema({
     isIncome: { type : Boolean , default : false } ,
     userId:{type:String,required:true}
 
+},
+{
+    collection: "Trasnsaction",
 });
 
 module.exports = mongoose.model('Transaction', transactionSchema);
