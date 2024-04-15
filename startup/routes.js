@@ -8,8 +8,6 @@ module.exports = function (app) {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
-  // app.use("/familyfinance", seller);
   app.use("/familyfinance/user-api", userAppRoute);
   app.use(errorHandler);
   app.use(notFound);

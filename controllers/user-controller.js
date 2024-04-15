@@ -2,8 +2,8 @@ const User = require("../models/User");
 
 const { userApp } = require("../custom_modules/firebase-admin");
 const { genResFormat,
-    genResWithObjectFormat,
-    generateJWTToken } = require("../custom_modules/util")
+    genResWithObjectFormat } = require("../custom_modules/util")
+
 
 exports.signup = async (req, res) => {
     const { name, mobileNo, emailId, address } = req.body;
@@ -49,3 +49,35 @@ exports.signin = async (req, res) => {
             genResFormat(res, false, "Invalid Token");
         });
 };
+
+exports.getProfile = async (req, res) => {
+    const id = req.query;
+    const profile = await User.findOne({ _id: id });
+    if (!profile) {
+      genResFormat(res, false, "User Data not found");
+      return;
+    }
+    genResWithObjectFormat(res, true, "User Data", profile);
+  };
+
+exports.updateProfile = async(req,res) =>{
+    const { userId } = req.params;
+    const Profile = await User.findByIdAndUpdate(userId,req.body,{
+        new:true,
+    });
+    if(!Profile) {
+        genResFormat(res,false,"Profile Not Found");
+        return;
+    }
+    genResFormat(res,true,"Profile Entry Updated");
+} 
+
+exports.checkMobileNo = async (req, res) => {
+    const { mobileNo } = req.body;
+    const user = await User.findOne({ mobileNo: mobileNo });
+    if (!user) {
+      genResFormat(res, false, "Mobile number does not exist, Please Sign up!");
+      return;
+    }
+    genResWithObjectFormat(res, true, "User Data", user);
+  };

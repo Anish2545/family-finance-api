@@ -5,8 +5,8 @@ const {
 } = require("../custom_modules/util");
 
 exports.auth = async (req, res, next) => {
-  const phone = req.query.mobileNo;
-  const userdata = await user.findOne({ mobileNo: phone });
+  const phone = req.query.number;
+  const userdata = await user.findOne({ number: phone });
   if (!userdata) {
     genResFormat(res, false, "User Data not found");
     return;

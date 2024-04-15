@@ -1,12 +1,10 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router();
-const UserController = require("../controllers/user-controller")
-const {auth} = require("../middleware/auth")
 
+const userRoute = require("../routers/user/user");
+const transactionRoute = require("../routers/user/transaction");
 
-router.post("/signup", UserController.signup);
+router.use("/",userRoute);
+router.use("/",transactionRoute);
 
-router.post("/signin", UserController.signin);
-
-// router.use("/user-api");
 module.exports = router;
