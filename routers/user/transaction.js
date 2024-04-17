@@ -6,11 +6,12 @@ const {
   getTransactionById,
   getTransactionListData
 } = require("../../controllers/transaction-controller");
+const auth = require("../../middleware/admin_auth")
 // const productId = require("../../middlewares/product");
 
-router.get("/transaction:id", getTransactionById);
-router.get("/transaction", getTransaction);
-router.post("/addtransaction", addTransaction);
-router.get("/transactionlist", getTransactionListData);
+router.get("/transaction:id", auth, getTransactionById);
+router.get("/transaction", auth, getTransaction);
+router.post("/addtransaction", auth, addTransaction);
+router.get("/transactionlist", auth, getTransactionListData);
 
 module.exports = router;

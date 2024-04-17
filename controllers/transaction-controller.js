@@ -12,14 +12,14 @@ const {
 // };
 
 exports.addTransaction = async (req, res) => {
-  const { isIncome, transactionDate, amount, expenseCategory,userId } = req.body;
+  const { isIncome, transactionDate, amount, expenseCategory, userId } = req.body;
 
   const resp = await transaction.create({
     isIncome: isIncome,
     transactionDate: transactionDate,
     amount: amount,
     expenseCategory: expenseCategory,
-    userId : userId
+    userId: userId
   });
 
   genResWithObjectFormat(res, true, "Transaction Added Successfully.", {
@@ -37,14 +37,14 @@ exports.getTransaction = async (req, res) => {
   genResWithObjectFormat(res, true, "Transaction Data.", transactions);
 };
 
-exports.getTransactionListData = async (req,res)=>{
-    const listtransactions =  await transaction.find({ userId:id },{
-        transactionDate:1,
-        amount:1,
-        expenseCategory:1,
-        isIncome:1
-    });
-    genResWithObjectFormat(res,true,"Transaction Data",listtransactions)
+exports.getTransactionListData = async (req, res) => {
+  const listtransactions = await transaction.find({ userId: id }, {
+    transactionDate: 1,
+    amount: 1,
+    expenseCategory: 1,
+    isIncome: 1
+  });
+  genResWithObjectFormat(res, true, "Transaction Data", listtransactions)
 }
 
 exports.getTransactionById = async (req, res) => {

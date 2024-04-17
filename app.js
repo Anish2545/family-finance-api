@@ -1,13 +1,16 @@
 const express = require('express');
 const app = express();
-require('./startup/routes')(app);
-require("./startup/db")();
 
-app.get("/familyfinance", (req, res) => {
+app.get("/", (req, res) => {
     res.status(200).send("API Working");
 });
 
-const port = process.env.PORT || 3000;
+
+require('./startup/routes')(app);
+require("./startup/db")();
+
+
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`)
 });

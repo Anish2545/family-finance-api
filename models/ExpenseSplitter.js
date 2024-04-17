@@ -6,7 +6,8 @@ const expenseSplitterSchema = new Schema({
     title: { type: String, required: true},  
     date: {type: Date, required: true,default:Date.now()},
     expenseAmount: { type: Number, required: true } ,
-    totalUser: { type: Number, required: true} ,
+    noOfUser: { type: Number, required: true} ,
+    
     isSettlementDone: { type : Boolean, default: false }
 },
 {

@@ -1,6 +1,7 @@
 const User = require("../models/User");
 
 const { userApp } = require("../custom_modules/firebase-admin");
+const jwt = require("jsonwebtoken");
 const { genResFormat,
     genResWithObjectFormat } = require("../custom_modules/util")
 
@@ -54,30 +55,30 @@ exports.getProfile = async (req, res) => {
     const id = req.query;
     const profile = await User.findOne({ _id: id });
     if (!profile) {
-      genResFormat(res, false, "User Data not found");
-      return;
-    }
-    genResWithObjectFormat(res, true, "User Data", profile);
-  };
-
-exports.updateProfile = async(req,res) =>{
-    const { userId } = req.params;
-    const Profile = await User.findByIdAndUpdate(userId,req.body,{
-        new:true,
-    });
-    if(!Profile) {
-        genResFormat(res,false,"Profile Not Found");
+        genResFormat(res, false, "User Data not found");
         return;
     }
-    genResFormat(res,true,"Profile Entry Updated");
-} 
+    genResWithObjectFormat(res, true, "User Data", profile);
+};
+
+exports.updateProfile = async (req, res) => {
+    const { userId } = req.params;
+    const Profile = await User.findByIdAndUpdate(userId, req.body, {
+        new: true,
+    });
+    if (!Profile) {
+        genResFormat(res, false, "Profile Not Found");
+        return;
+    }
+    genResFormat(res, true, "Profile Entry Updated");
+}
 
 exports.checkMobileNo = async (req, res) => {
     const { mobileNo } = req.body;
     const user = await User.findOne({ mobileNo: mobileNo });
     if (!user) {
-      genResFormat(res, false, "Mobile number does not exist, Please Sign up!");
-      return;
+        genResFormat(res, false, "Mobile number does not exist, Please Sign up!");
+        return;
     }
     genResWithObjectFormat(res, true, "User Data", user);
-  };
+};

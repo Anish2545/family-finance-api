@@ -10,7 +10,7 @@ const {auth} = require("../../middleware/auth")
 
 router.get("/profile", getProfile);
 
-router.put("/profile:id",updateProfile);
+router.put("/profile/:id",updateProfile);
 
 router.post("/signup", signup);
 
