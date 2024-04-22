@@ -7,7 +7,7 @@ const userSchema = new Schema({
     mobileNo: { type: String, required: true },
     emailId: { type: String, required: true },
     item: { type: String },
-    address:{type: String, required: true},
+    address:{type: String},
     city: { type: String },
     state: { type: String },
     country: { type: String },
@@ -18,7 +18,7 @@ const userSchema = new Schema({
     balanceAmount: { type: Number, default: 0 }
 },
 {
-    collection: "User",
+    collection: "user",
 });
 
 module.exports = mongoose.model('User', userSchema);

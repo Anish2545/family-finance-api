@@ -16,7 +16,7 @@ router.post("/signup", signup);
 
 router.post("/signin", signin);
 
-router.post("/checkMobileNo", checkMobileNo);
+router.post("/check-mobile-no", checkMobileNo);
 
 
 // router.use("/user-api");

@@ -7,16 +7,39 @@ const { genResFormat,
 
 
 exports.signup = async (req, res) => {
-    const { name, mobileNo, emailId, address } = req.body;
-    const resp = await User.create({
-        name: name,
-        mobileNo: mobileNo,
-        emailId: emailId,
-        address: address,
-    });
-    genResWithObjectFormat(res, true, "User Added Successfully.", {
-        userId: resp._id,
-    });
+    const { name, mobileNo, emailId, address, id_token } = req.body;
+
+    userApp
+        .auth()
+        .verifyIdToken(id_token)
+        .then(async (decodedToken) => {
+            console.log('decodedToken ::', decodedToken);
+            const user = await User.findOne({ mobileNo: number });
+
+            //generate token
+            const token = jwt.sign(
+                {
+                    userId: user._id,
+                    mobileNo: user.mobileNo,
+                    name: user.name,
+                    emailId: user.emailId,
+                },
+                "newuser-123456"
+            );
+
+            const resp = await User.create({
+                name: name,
+                mobileNo: mobileNo,
+                emailId: emailId,
+            });
+
+            genResWithObjectFormat(res, true, "User Added Successfully.", {
+                userId: resp._id,
+            });
+        })
+        .catch(() => {
+            genResFormat(res, false, "Invalid Token");
+        });
 };
 
 exports.signin = async (req, res) => {
@@ -76,8 +99,8 @@ exports.updateProfile = async (req, res) => {
 exports.checkMobileNo = async (req, res) => {
     const { mobileNo } = req.body;
     const user = await User.findOne({ mobileNo: mobileNo });
-    if (!user) {
-        genResFormat(res, false, "Mobile number does not exist, Please Sign up!");
+    if (user) {
+        genResFormat(res, false, "Mobile already exits");
         return;
     }
     genResWithObjectFormat(res, true, "User Data", user);
