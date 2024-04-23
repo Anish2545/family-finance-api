@@ -4,8 +4,8 @@ const {getProfile,
 updateProfile,
 signin,
 signup,
-checkMobileNo} = require("../../controllers/user-controller")
-const {auth} = require("../../middleware/auth")
+checkMobileNo} = require("../controllers/user-controller")
+const {auth} = require("../middleware/auth")
 
 
 router.get("/profile", getProfile);

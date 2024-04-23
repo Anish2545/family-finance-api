@@ -5,6 +5,6 @@ module.exports = function () {
       .connect(
         "mongodb+srv://sopariwalaanish:yz30fdvMbxZcRXt5@familyfinance.qbwamem.mongodb.net/family-finance",
       )
-      .then(() => console.log("Connected To Database Successfully ..."));
+      .then(() => console.log("Connected To Database Successfully...."));
   };
   

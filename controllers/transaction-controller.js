@@ -12,14 +12,13 @@ const {
 // };
 
 exports.addTransaction = async (req, res) => {
-  const { isIncome, transactionDate, amount, expenseCategory, userId } = req.body;
+  const { isIncome, transactionDate, amount, expenseCategory } = req.body;
 
   const resp = await transaction.create({
     isIncome: isIncome,
     transactionDate: transactionDate,
     amount: amount,
-    expenseCategory: expenseCategory,
-    userId: userId
+    expenseCategory: expenseCategory
   });
 
   genResWithObjectFormat(res, true, "Transaction Added Successfully.", {

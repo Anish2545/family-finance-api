@@ -1,5 +1,4 @@
 const User = require("../models/User");
-
 const { userApp } = require("../custom_modules/firebase-admin");
 const jwt = require("jsonwebtoken");
 const { genResFormat,
@@ -7,25 +6,13 @@ const { genResFormat,
 
 
 exports.signup = async (req, res) => {
-    const { name, mobileNo, emailId, address, id_token } = req.body;
+    const { name, mobileNo, emailId, id_token } = req.body;
 
     userApp
         .auth()
         .verifyIdToken(id_token)
         .then(async (decodedToken) => {
             console.log('decodedToken ::', decodedToken);
-            const user = await User.findOne({ mobileNo: number });
-
-            //generate token
-            const token = jwt.sign(
-                {
-                    userId: user._id,
-                    mobileNo: user.mobileNo,
-                    name: user.name,
-                    emailId: user.emailId,
-                },
-                "newuser-123456"
-            );
 
             const resp = await User.create({
                 name: name,
@@ -33,11 +20,24 @@ exports.signup = async (req, res) => {
                 emailId: emailId,
             });
 
+            //generate token
+            const token = jwt.sign(
+                {
+                    userId: resp._id,
+                    mobileNo: resp.mobileNo
+                },
+                "newuser-123456"
+            );
+
+            
+
             genResWithObjectFormat(res, true, "User Added Successfully.", {
                 userId: resp._id,
+                token : token
             });
         })
-        .catch(() => {
+        .catch((error) => {
+            console.log(error)
             genResFormat(res, false, "Invalid Token");
         });
 };
