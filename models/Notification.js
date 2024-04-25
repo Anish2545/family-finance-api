@@ -10,7 +10,7 @@ const notificationSchema = new Schema({
     },
 },
 {
-    collection: "Notification",
+    collection: "notification",
 });
 
 module.exports = mongoose.model('Notification', notificationSchema);

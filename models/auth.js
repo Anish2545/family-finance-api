@@ -10,7 +10,7 @@ const authSchema = new Schema({
     },
 },
 {
-    collection: "Authentication",
+    collection: "authentication",
 }
 );
 

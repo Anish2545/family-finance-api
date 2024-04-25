@@ -7,7 +7,7 @@ const expenseSplitterUserSchema = new Schema({
     dueAmount: {type :Number}
 },
 {
-    collection: "ExpenseSplitterUser",
+    collection: "expenseSplitterUser",
 });
 
 module.exports = mongoose.model('ExpenseSplitterUser', expenseSplitterUserSchema);

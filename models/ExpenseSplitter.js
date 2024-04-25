@@ -11,7 +11,7 @@ const expenseSplitterSchema = new Schema({
     isSettlementDone: { type : Boolean, default: false }
 },
 {
-    collection: "ExpenseSplitter",
+    collection: "expenseSplitter",
 });
 
 module.exports = mongoose.model('ExpenseSplitter', expenseSplitterSchema);

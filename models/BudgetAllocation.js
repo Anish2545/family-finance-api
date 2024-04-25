@@ -10,7 +10,7 @@ const budgetAllocationSchema = new Schema({
     givenByUserId:{type:String,required:true}
 },
 {
-    collection: "BudgetAllocation",
+    collection: "budgetAllocation",
 });
 
 module.exports = mongoose.model('BudgetAllocation', budgetAllocationSchema);

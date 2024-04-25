@@ -68,35 +68,19 @@ exports.getTransactionListData = async (req, res) => {
   generalListData(res, count, transactionList);
 }
 
-// exports.getNotificationsForCustomer = async (req, res) => {
-//   const first = parseInt(req.body.first) || 0;
-//   const rows = parseInt(req.body.rows) || 10;
-//   const { customerId } = req.user;
-
-//   let globalFilter = { customer: customerId };
-
-//   const count = await Notification.countDocuments(globalFilter);
-
-//   const notifications = await Notification.find(globalFilter)
-//     .sort({ createdAt: -1 })
-//     .skip(first)
-//     .limit(rows)
-//     .exec();
-
-//   let notificationList = [];
-
-//   notifications.forEach((element) => {
-//     notificationList.push({
-//       _id: element._id || "",
-//       title: element.title || "",
-//       message: element.message || "",
-//       image: element.image || "",
-//       createdAt: element.createdAt || "",
-//     });
-//   });
-
-//   generalListData(res, count, notificationList);
-// };
+exports.deleteTransaction = async(req,res) =>{
+  const {transactionId} = req.params;
+  console.log(transactionId);
+  const transaction = await Transaction.findById(transactionId)
+  if(!transaction){
+    genResFormat(res, false, "Transaction not found");
+    return;
+  }
+  await Transaction.deleteOne({
+    _id: transactionId,
+  })
+  genResFormat(res, true, "Transaction Deleted Successfully.");
+}
 
 exports.getTransactionById = async (req, res) => {
   const id = req.query;

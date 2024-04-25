@@ -6,7 +6,7 @@ const expenseCategorySchema = new Schema({
     categoryName:{type:String,required:true}
 },
 {
-    collection: "ExpenseCategory",
+    collection: "expenseCategory",
 }
 );
 
