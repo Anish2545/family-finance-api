@@ -6,7 +6,7 @@ module.exports = function(req,res,next){
     if (!token)
         return res.status(401).send({flag:false,message: "Access Denied.Token Missing"});
     try{
-        const decoded = jwt.verify(token,privateKey.adminPrivateKey);
+        const decoded = jwt.verify(token,"newuser-123456");
         req.user = decoded;
         next();
     }

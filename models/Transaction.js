@@ -5,12 +5,12 @@ const transactionSchema = new Schema({
     transactionDate: { type : Date , required: true,defaut:Date.now() }, 
     amount: { type : Number , unique : false } ,
     expenseCategory: { type : String , unique : false , required:true} ,
-    isIncome: { type : Boolean , default : false } ,
-    userId:{type:String,required:true}
+    isIncome: { type : String , default : false } ,
+    userId:{type:String}
 
 },
 {
-    collection: "Trasnsaction",
+    collection: "trasnsaction",
 });
 
 module.exports = mongoose.model('Transaction', transactionSchema);

@@ -39,6 +39,14 @@ exports.dataTableGridFormat = (res, count, result) => {
   });
 };
 
+exports.generalListData = (res, count, result) => {
+  res.status(200).send({
+    flag: true,
+    count: count || 0,
+    data: result.length > 0 ? result : [],
+  });
+};
+
 exports.generateJwtToken = (userId) => {
   const token = jwt.sign({ userId }, "shhhhh"); // Token expires in 1 hour
   return token;

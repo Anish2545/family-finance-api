@@ -7,6 +7,6 @@ const{
 const auth= require ('../middleware/admin_auth');
 
 router.post("/addsubuser",auth,addSubUser);
-router.get("/getsubuserlist",auth,getSubUserListData);
+router.post("/getsubuserlist",auth,getSubUserListData);
 
 module.exports=router;

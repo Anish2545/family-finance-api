@@ -5,9 +5,10 @@ const subuserSchema = new Schema({
     name: { type: String, required: true },
     relationToUser:{type: String, required:true},
     mobileNo: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
 },
 {
-    collection: "Sub-User"
+    collection: "subUser"
 })
 
-module.exports = mongoose.model('Sub-User',subuserSchema)
+module.exports = mongoose.model('Sub User',subuserSchema)

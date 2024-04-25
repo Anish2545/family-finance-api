@@ -43,14 +43,14 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-    const { id_token, number, User } = req.body;
+    const { id_token, mobileNo } = req.body;
 
     userApp
         .auth()
         .verifyIdToken(id_token)
         .then(async (decodedToken) => {
             console.log('decodedToken ::', decodedToken);
-            const user = await User.findOne({ mobileNo: number });
+            const user = await User.findOne({ mobileNo: mobileNo });
 
             //generate token
             const token = jwt.sign(
@@ -59,7 +59,7 @@ exports.signin = async (req, res) => {
                     mobileNo: user.mobileNo,
                     name: user.name,
                 },
-                "user-123456"
+                "newuser-123456"
             );
 
             genResWithObjectFormat(res, true, "Login Successfull", {
@@ -69,7 +69,8 @@ exports.signin = async (req, res) => {
                 token: token,
             });
         })
-        .catch(() => {
+        .catch((error) => {
+            console.log(error);
             genResFormat(res, false, "Invalid Token");
         });
 };

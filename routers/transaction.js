@@ -12,6 +12,6 @@ const auth = require("../middleware/admin_auth")
 router.get("/transaction:id", auth, getTransactionById);
 router.get("/transaction", auth, getTransaction);
 router.post("/addtransaction", auth, addTransaction);
-router.get("/transactionlist", auth, getTransactionListData);
+router.post("/transactionlist", auth, getTransactionListData);
 
 module.exports = router;
