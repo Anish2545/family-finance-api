@@ -76,8 +76,9 @@ exports.signin = async (req, res) => {
 };
 
 exports.getProfile = async (req, res) => {
-    const id = req.query;
-    const profile = await User.findOne({ _id: id });
+    const {userId} = req.user;
+    console.log(userId);
+    const profile = await User.findOne({_id : userId});
     if (!profile) {
         genResFormat(res, false, "User Data not found");
         return;
@@ -86,10 +87,8 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.updateProfile = async (req, res) => {
-    const { userId } = req.params;
-    const Profile = await User.findByIdAndUpdate(userId, req.body, {
-        new: true,
-    });
+    const { userId } = req.user;
+    const Profile = await User.findByIdAndUpdate(userId, req.body);
     if (!Profile) {
         genResFormat(res, false, "Profile Not Found");
         return;

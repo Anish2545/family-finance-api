@@ -56,6 +56,20 @@ exports.getSubUserListData = async (req, res) => {
     generalListData(res, count, subuserList);
   }
 
+  exports.deleteSubUser = async(req,res) =>{
+    const {subuserId} = req.params;
+    console.log(subuserId);
+    const Subuser = await subuser.findById(subuserId)
+    if(!Subuser){
+      genResFormat(res, false, "Sub User not found");
+      return;
+    }
+    await Subuser.deleteOne({
+      _id: subuserId,
+    })
+    genResFormat(res, true, "Sub User Deleted Successfully.");
+  }  
+
 exports.getSubUserById = async (req, res) => {
     const id = req.query;
     const Subuser = await subuser.findById({
