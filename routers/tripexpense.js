@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const {
-  addTrip,
-  getTripListData,
-} = require("../controllers/tripexpense-contoller");
+  addTripExpense,
+  getTripExpenseList,
+} = require("../controllers/tripexpense-controller");
 const auth = require("../middleware/admin_auth");
 
-router.post("/addtrip", auth, addTrip);
-router.post("/gettriplist", auth, getTripListData);
+router.post("/addtripexpense", auth, addTripExpense);
+router.post("/gettriplistexpense/:id", auth, getTripExpenseList);
 
 module.exports = router;
