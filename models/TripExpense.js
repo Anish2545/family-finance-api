@@ -4,10 +4,11 @@ const Schema = mongoose.Schema;
 const tripexpenseSchema = new Schema({
     amount: { type : Number , required:true} ,
     description: { type : String , required:true} ,
-    tripid: { type:String  }
+    tripId: { type: Schema.Types.ObjectId, ref: 'Trips'  },
+    user:{ type: Schema.Types.ObjectId, ref: 'User' }
 },
 {
-    collection: "TripExpense",
+    collection: "tripExpense",
 });
 
 module.exports = mongoose.model('TripExpense', tripexpenseSchema);

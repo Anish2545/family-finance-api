@@ -7,6 +7,6 @@ const {
 const auth = require("../middleware/admin_auth");
 
 router.post("/addtripexpense", auth, addTripExpense);
-router.post("/gettriplistexpense/:id", auth, getTripExpenseList);
+router.get("/gettriplistexpense/:tripId", auth, getTripExpenseList);
 
 module.exports = router;
