@@ -8,6 +8,7 @@ const tripSchema = new Schema(
     date: { type: Date, required: true, default: Date.now() },
     totalAmount: { type: Number },
     noOfUser: { type: Number },
+    phone:{type:Number},
     isSettlementDone: { type: Boolean, default: false },
   },
   {

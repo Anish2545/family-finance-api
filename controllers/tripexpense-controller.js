@@ -8,31 +8,12 @@ const {
 } = require("../custom_modules/util");
 
 exports.addTripExpense = async (req, res) => {
-  const { userId } = req.user;
-  const { amount, description, tripId } = req.body;
+  const { amount, description } = req.body;
+
   const resp = await tripexpense.create({
     amount: amount,
     description: description,
-    tripId: tripId,
-    user: userId,
   });
-
-  const expenseList = await tripexpense.find(
-    { tripId: tripId },
-    {
-      amount: 1
-    }
-  );
-
-  let totalAmount = 0;
-  expenseList.forEach(x => {
-    totalAmount += x.amount;
-  })
-
-  await trip.findByIdAndUpdate(
-    tripId,
-    { totalAmount:totalAmount }
-  )
 
   genResWithObjectFormat(res, true, "Expense Added Successfully.", {
     tripexpenseId: resp._id,
@@ -54,3 +35,17 @@ exports.getTripExpenseList = async (req, res) => {
   }
   genResWithObjectFormat(res, true, "Trip Expense", expense);
 };
+
+exports.deleteTripExpense = async(req,res) =>{
+  const {tripexpenseId} = req.params;
+  console.log(tripexpenseId);
+  const expense = await tripexpense.findById(tripexpenseId)
+  if(!expense){
+    genResFormat(res, false, "Expense not found");
+    return;
+  }
+  await tripexpense.deleteOne({
+    _id: tripexpenseId,
+  })
+  genResFormat(res, true, "Expense Deleted Successfully.");
+}
