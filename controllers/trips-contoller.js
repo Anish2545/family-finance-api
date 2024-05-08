@@ -1,6 +1,5 @@
 const trip = require("../models/Trips");
 const tripexpense = require("../models/TripExpense");
-const trippeople = require("../models/tripperson");
 const {
   genResFormat,
   genResWithObjectFormat,
@@ -86,6 +85,21 @@ exports.addTripPeople = async (req, res) => {
   genResWithObjectFormat(res, true, "Person Added Successfully.", {
     person: resp._id,
   });
+};
+
+exports.getTripPeopleList = async (req, res) => {
+  const { tripId } = req.params;
+  const people = await tripperson.find(
+    { tripId: tripId },
+    {
+      phone: 1,
+    }
+  );
+  if (!people) {
+    genResFormat(res, false, "No People");
+    return;
+  }
+  genResWithObjectFormat(res, true, "People", people);
 };
 
 

@@ -2,7 +2,8 @@ const Transaction = require("../models/Transaction");
 // const capacity = require("../../models/seller/capacity");
 const {
   genResFormat,
-  genResWithObjectFormat,generalListData
+  genResWithObjectFormat,
+  generalListData,
 } = require("../custom_modules/util");
 
 // exports.addProduct = async (req, res) => {
@@ -18,7 +19,7 @@ exports.addTransaction = async (req, res) => {
     isIncome: isIncome,
     transactionDate: transactionDate,
     amount: amount,
-    expenseCategory: expenseCategory
+    expenseCategory: expenseCategory,
   });
 
   genResWithObjectFormat(res, true, "Transaction Added Successfully.", {
@@ -43,44 +44,71 @@ exports.getTransactionListData = async (req, res) => {
   let globalFilter;
   //= { id:userId };
 
-  const count = await Transaction.countDocuments(globalFilter);
+  try {
+    const count = await Transaction.countDocuments(globalFilter);
 
-  const listtransactions = await Transaction.find(globalFilter)
-  .sort({ transactionDate: -1 })
-  .skip(first)
-  .limit(rows)
-  .exec();
+    const listtransactions = await Transaction.find(globalFilter)
+      .sort({ transactionDate: -1 })
+      .skip(first)
+      .limit(rows)
+      .exec();
 
-  let transactionList = [];
+    let transactionList = [];
 
-  listtransactions.forEach((element) => {
-    transactionList.push({
-      _id: element._id || "",
-      transactionDate: element.transactionDate || "",
-      amount: element.amount || "",
-      expenseCategory: element.expenseCategory || "",
-      isIncome: element.isIncome || "",
-    });
-  });
+    for (let element of listtransactions) {
+      // Fetch expenses associated with the trip
+      const income = await Transaction.find({ isIncome: "income" });
 
-  console.log(transactionList)
+      // Calculate totalAmount for the trip
+      let totalincome = 0;
+      income.forEach((Income) => {
+        totalincome += Income.amount;
+      });
 
-  generalListData(res, count, transactionList);
-}
+      const expenses = await Transaction.find({ isIncome: "expense" });
 
-exports.deleteTransaction = async(req,res) =>{
-  const {transactionId} = req.params;
+      let totalexpense = 0;
+      expenses.forEach((Expense) => {
+        totalexpense += Expense.amount;
+      });
+
+      let balance = totalincome - totalexpense;
+
+      transactionList.push({
+        _id: element._id || "",
+        transactionDate: element.transactionDate || "",
+        amount: element.amount || "",
+        expenseCategory: element.expenseCategory || "",
+        isIncome: element.isIncome || "",
+        totalincome: totalincome,
+        totalexpense: totalexpense,
+        balance: balance,
+      });
+    }
+    // Push trip details along with totalAmount to tripList array
+
+    console.log(transactionList);
+
+    generalListData(res, count, transactionList);
+  } catch (error) {
+    console.error("Error fetching trip list:", error);
+    res.status(500).json({ flag: false, message: "Internal server error" });
+  }
+};
+
+exports.deleteTransaction = async (req, res) => {
+  const { transactionId } = req.params;
   console.log(transactionId);
-  const transaction = await Transaction.findById(transactionId)
-  if(!transaction){
+  const transaction = await Transaction.findById(transactionId);
+  if (!transaction) {
     genResFormat(res, false, "Transaction not found");
     return;
   }
   await Transaction.deleteOne({
     _id: transactionId,
-  })
+  });
   genResFormat(res, true, "Transaction Deleted Successfully.");
-}
+};
 
 exports.getTransactionById = async (req, res) => {
   const id = req.query;
@@ -94,3 +122,26 @@ exports.getTransactionById = async (req, res) => {
   genResWithObjectFormat(res, true, "Transaction Data.", Transaction);
 };
 
+exports.getIncome = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const Income = await Transaction.find({
+      userId: userId,
+      isIncome: "income",
+    });
+
+    let totalincome = 0;
+    Income.forEach((income) => {
+      totalincome += income.amount;
+    });
+    genResWithObjectFormat(res, true, "Total income.", totalincome);
+  } catch (error) {
+    // Handle any errors
+    console.error("Error in getBalance:", error);
+    genResWithObjectFormat(
+      res,
+      false,
+      "Error occurred while fetching balance."
+    );
+  }
+};

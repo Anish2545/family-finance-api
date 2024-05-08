@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const trippersonSchema = new Schema({
     phone: { type : Number } ,
-    tripId: { type: Schema.Types.ObjectId, ref: 'Trips'  },
+    tripId: { type: Schema.Types.ObjectId, ref: 'Trips' },
     userId:{ type: Schema.Types.ObjectId, ref: 'User' },
 },
 {
