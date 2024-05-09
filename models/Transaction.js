@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema({
@@ -11,6 +11,7 @@ const transactionSchema = new Schema({
 },
 {
     collection: "trasnsaction",
-});
+  }
+);
 
-module.exports = mongoose.model('Transaction', transactionSchema);
+module.exports = mongoose.model("Transaction", transactionSchema);
