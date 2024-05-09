@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const monthlyBalanceSchema = new mongoose.Schema(
+const monthlyBalanceSchema = new Schema(
   {
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "monthlyBalance"},
     month: {
       type: String,
       required: true,
@@ -32,5 +33,5 @@ const monthlyBalanceSchema = new mongoose.Schema(
   }
 );
 
-// Define the model
-const MonthlyBalance = mongoose.model("MonthlyBalance", monthlyBalanceSchema);
+module.exports = mongoose.model("MonthlyBalance", monthlyBalanceSchema);
+

@@ -5,6 +5,7 @@ const transactionRoute = require("../routers/transaction");
 const subuserRoute = require("../routers/subuser");
 const tripexpenseRoute = require("../routers/trips");
 const tripexpenseamountRoute = require("../routers/tripexpense");
+const dashboardRoute = require("../routers/dashboard")
 const errorHandler = require("../middleware/error-handler");
 const notFound = require("../middleware/not-found");
 
@@ -17,6 +18,7 @@ module.exports = function (app) {
   app.use("/subuser",subuserRoute);
   app.use("/tripexpense",tripexpenseRoute);
   app.use("/tripexpenseamount",tripexpenseamountRoute);
+  app.use("/dashboardbalance",dashboardRoute)
   app.use(errorHandler);
   app.use(notFound);
 };
