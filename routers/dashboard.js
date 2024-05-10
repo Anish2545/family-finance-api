@@ -10,7 +10,7 @@ const {
 const auth= require ('../middleware/admin_auth');
 
 router.get("/getoverallbalance",auth,getOverallBalance);
-router.get("/getmonthlybalance",auth,getMonthlyBalance);
+router.post("/getmonthlybalance",auth,getMonthlyBalance);
 // router.get("/getmonthlyincome",auth,getMonthlyIncome);
 // router.get("/getmonthlyexpense",auth,getMonthlyExpense);
 

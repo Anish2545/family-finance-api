@@ -11,6 +11,7 @@ const monthlyBalanceSchema = new Schema(
     year: {
       type: Number,
       required: true,
+      default: 2024
     },
     balance: {
       type: Number,

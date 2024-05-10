@@ -72,11 +72,11 @@ exports.getTripListData = async (req, res) => {
 };
 
 exports.addTripPeople = async (req, res) => {
-
-  const {userId} = req.user;
-  const { phone, tripId } = req.body;
+  const { userId } = req.user;
+  const { phone, tripId, name } = req.body;
 
   const resp = await tripperson.create({
+    name: name,
     phone: phone,
     userId: userId,
     tripId: tripId,
@@ -92,7 +92,9 @@ exports.getTripPeopleList = async (req, res) => {
   const people = await tripperson.find(
     { tripId: tripId },
     {
+      name:1,
       phone: 1,
+      amount: 1,
     }
   );
   if (!people) {
@@ -101,8 +103,6 @@ exports.getTripPeopleList = async (req, res) => {
   }
   genResWithObjectFormat(res, true, "People", people);
 };
-
-
 
 // exports.getTripListData = async (req, res) => {
 //   const first = parseInt(req.body.first) || 0;
