@@ -3,13 +3,16 @@ const router = express.Router();
 const {
   addTripExpense,
   getTripExpenseList,
-  deleteTripExpense
+  deleteTripExpense,
 } = require("../controllers/tripexpense-controller");
 const auth = require("../middleware/admin_auth");
 
 router.post("/addtripexpense", auth, addTripExpense);
 router.get("/gettriplistexpense/:tripId", auth, getTripExpenseList);
-router.delete("/gettriplistexpense/:tripexpenseId",auth,deleteTripExpense)
-
+router.delete(
+  "/gettriplistexpense/:tripexpenseId/:tripId",
+  auth,
+  deleteTripExpense
+);
 
 module.exports = router;

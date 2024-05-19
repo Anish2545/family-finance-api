@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    userId: { type: String },
     name: { type: String, required: true },
     mobileNo: { type: String, required: true },
     emailId: { type: String },
@@ -12,10 +11,15 @@ const userSchema = new Schema(
     gender: { type: String },
     latitude: { type: String },
     longitude: { type: String },
+    relationToUser: { type: String },
     isSubUser: { type: Boolean, default: false },
     balanceAmount: { type: Number, default: 0 },
     expenseAmount: { type: Number, default: 0 },
     incomeAmount: { type: Number, default: 0 },
+    mainUserId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     collection: "user",
